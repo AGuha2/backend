@@ -101,10 +101,12 @@ def set_session():
     )
     return response
 
-@app.route('/api/go', methods=['GET'])
-def open_redirect():
-    url = request.args.get('url', '/')
-    return redirect(url)   # ZAP alert: URL Redirector Abuse
+@app.route('/api/course-feedback', methods=['GET'])
+def course_feedback():
+    name = request.args.get('name', '')
+    # Vulnerability: user input reflected into HTML without encoding
+    html = f"<html><body><h2>Feedback submitted by: {name}</h2></body></html>"
+    return make_response(html, 200)
 
 def is_course_teacher(course_id: int, teacher_id: int) -> bool:
     """
