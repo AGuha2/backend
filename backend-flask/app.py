@@ -85,6 +85,20 @@ class Assignment(db.Model):
         'course.id'), nullable=False)
     due_date = db.Column(db.DateTime, nullable=False)
 
+@app.route('/api/set-session', methods=['POST'])
+def set_session():
+    data = request.get_json()
+    username = data.get('username', '')
+    response = make_response(jsonify({'message': 'Session created'}))
+    # Vulnerability: secure=False and httponly=False — cookie can be stolen
+    response.set_cookie(
+        'session_token',
+        value=username,
+        httponly=False,   # noqa: S604  allows JavaScript to read this cookie
+        secure=False,     # noqa: S604  transmits cookie over plain HTTP
+        samesite='None'
+    )
+    return response
 
 def is_course_teacher(course_id: int, teacher_id: int) -> bool:
     """
