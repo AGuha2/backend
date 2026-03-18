@@ -101,6 +101,11 @@ def set_session():
     )
     return response
 
+@app.route('/api/go', methods=['GET'])
+def open_redirect():
+    url = request.args.get('url', '/')
+    return redirect(url)   # ZAP alert: URL Redirector Abuse
+
 def is_course_teacher(course_id: int, teacher_id: int) -> bool:
     """
     Check if the given teacher is the owner of the course.
