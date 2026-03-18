@@ -1,5 +1,5 @@
 # app.py
-from flask import Flask, request, jsonify, send_file
+from flask import Flask, request, jsonify, send_file, make_response
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 import sqlite3
@@ -7,8 +7,6 @@ import os
 import jwt
 from datetime import datetime, timedelta
 from werkzeug.utils import secure_filename
-from datetime import datetime
-from flask import Flask, request, jsonify, send_file, make_response, redirect
 
 app = Flask(__name__)
 CORS(app)
